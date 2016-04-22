@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Fri Apr 22 13:24:52 BRT 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0154-3ec9-c917-000003575178 
+on database directory /home/murilo/controladorDeAcesso/controleAcessoData with class loader sun.misc.Launcher$AppClassLoader@1d16e93 
+Loaded from file:/home/murilo/.m2/repository/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_77-b03
+user.dir=/home/murilo/controladorDeAcesso
+os.name=Linux
+os.arch=i386
+os.version=3.13.0-85-generic
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
