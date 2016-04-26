@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufg.inf.fabrica.pac.seguranca.dao.imp;
+package br.ufg.inf.fabrica.pac.controleAcesso.dao.imp;
 
 import java.sql.Connection;
 import java.sql.SQLException;

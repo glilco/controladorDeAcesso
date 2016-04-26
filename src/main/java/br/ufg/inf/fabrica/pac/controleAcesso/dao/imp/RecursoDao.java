@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufg.inf.fabrica.pac.seguranca.dao.imp;
+package br.ufg.inf.fabrica.pac.controleAcesso.dao.imp;
 
-import br.ufg.inf.fabrica.pac.seguranca.dao.IRecursoDao;
-import br.ufg.inf.fabrica.pac.seguranca.modelo.Recurso;
+import br.ufg.inf.fabrica.pac.controleAcesso.dao.IRecursoDao;
+import br.ufg.inf.fabrica.pac.controleAcesso.modelo.Recurso;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

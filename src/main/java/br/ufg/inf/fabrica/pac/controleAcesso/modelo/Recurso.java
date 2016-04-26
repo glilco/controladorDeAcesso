@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufg.inf.fabrica.pac.seguranca.modelo;
+package br.ufg.inf.fabrica.pac.controleAcesso.modelo;
 
 import java.util.Objects;
 
@@ -65,5 +65,10 @@ public class Recurso {
             return false;
         }
         return true;
+    }
+    
+    @Override
+    public String toString() {
+        return "("+ nome +", "+ descricao +")";
     }
 }
