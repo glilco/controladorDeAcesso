@@ -24,8 +24,7 @@ public class PapelDao implements IPapelDao {
     private static final String SQL_SELECT_PAPEL = "SELECT p.nome, p.descricao FROM papel AS p WHERE p.nome = ?";
     private static final String SQL_EXCLUI_PAPEL = "DELETE FROM papel AS p WHERE p.nome = ?";
 
-    public PapelDao() throws SQLException {
-        Conexao conexaoGerador = new Conexao();
+    public PapelDao(Conexao conexaoGerador) throws SQLException {
         conexao = conexaoGerador.getConexao();
     }
 
@@ -39,6 +38,8 @@ public class PapelDao implements IPapelDao {
         } catch (DerbySQLIntegrityConstraintViolationException ex) {
             System.err.println("Papel já existe no banco: " + objeto.getNome());
             return false;
+        } finally {
+            p.close();
         }
         
         return true;
@@ -56,6 +57,8 @@ public class PapelDao implements IPapelDao {
             papel = new Papel(r.getString(1), r.getString(2));
             
         }
+        r.close();
+        p.close();
         
         return papel;
     }
@@ -64,9 +67,12 @@ public class PapelDao implements IPapelDao {
     public Papel excluir(Papel objeto) throws SQLException {
         PreparedStatement p = conexao.prepareStatement(SQL_EXCLUI_PAPEL);
         p.setString(1, objeto.getNome());
-        p.executeUpdate();
-        
-        return objeto;
+        int i = p.executeUpdate();
+        p.close();
+        if(i > 0) {
+            return objeto;
+        }
+        return null;
     }
     
 }

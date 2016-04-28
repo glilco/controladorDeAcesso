@@ -40,8 +40,7 @@ public class PermissaoDao implements IPermissaoDao {
             + " AND p.nome_recurso = ?"
             + " AND p.nome_papel = ? ";
 
-    public PermissaoDao() throws SQLException {
-        Conexao conexaoGerador = new Conexao();
+    public PermissaoDao(Conexao conexaoGerador) throws SQLException {
         conexao = conexaoGerador.getConexao();
     }
 
@@ -58,6 +57,8 @@ public class PermissaoDao implements IPermissaoDao {
                     + " " + objeto.getRecurso().getNome()
                     + " " + objeto.getPapel().getNome());
             return false;
+        } finally {
+            p.close();
         }
         
         return true;
@@ -74,9 +75,12 @@ public class PermissaoDao implements IPermissaoDao {
         p.setString(1, objeto.getContexto().getNome());
         p.setString(2, objeto.getRecurso().getNome());
         p.setString(3, objeto.getPapel().getNome());
-        p.executeUpdate();
-        
-        return objeto;
+        int i = p.executeUpdate();
+        p.close();
+        if(i > 0) {
+            return objeto;
+        }
+        return null;
     }
 
     @Override
@@ -92,7 +96,8 @@ public class PermissaoDao implements IPermissaoDao {
         if(r.next()) {
             permissao = new Permissao(contexto, recurso, papel);
         }
-        
+        r.close();
+        p.close();
         return permissao;
     }
 
@@ -109,6 +114,9 @@ public class PermissaoDao implements IPermissaoDao {
         while(r.next()) {
             permissoes.add(new Permissao(new Contexto(r.getString("nome_contexto"), r.getString("desc_contexto")), recurso, papel));
         }
+        
+        r.close();
+        p.close();
         
         return permissoes;
     }
@@ -127,12 +135,17 @@ public class PermissaoDao implements IPermissaoDao {
                     new Recurso(r.getString("nome_recurso"), r.getString("desc_recurso")), papel));
         }
         
+        r.close();
+        p.close();
+        
         return permissoes;
     }
     
     
     public static void main(String args[]) throws SQLException{
-        PermissaoDao pd = new PermissaoDao();
+        Conexao conexao = new Conexao();
+        
+        PermissaoDao pd = new PermissaoDao(conexao);
         
         Recurso r1 = new Recurso("recurso1", "recurso 1");
         Papel p1 = new Papel("papel1","papel 1");
@@ -144,9 +157,9 @@ public class PermissaoDao implements IPermissaoDao {
         Permissao p = new Permissao(c1, r1, p1);
         
         
-        RecursoDao rd = new RecursoDao();
-        PapelDao pad = new PapelDao();
-        ContextoDao cd = new ContextoDao();
+        RecursoDao rd = new RecursoDao(conexao);
+        PapelDao pad = new PapelDao(conexao);
+        ContextoDao cd = new ContextoDao(conexao);
         
         rd.salvar(r1);
         pad.salvar(p1);

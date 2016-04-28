@@ -28,8 +28,8 @@ public class DaoUtils {
             + " DROP TABLE recurso;"
             + " DROP TABLE papel_recurso; DROP TABLE papel;";
     
-    public DaoUtils() throws SQLException {
-        Conexao conexaoCriador = new Conexao();
+    public DaoUtils(Conexao conexaoCriador) throws SQLException {
+        //Conexao conexaoCriador = new Conexao();
         conexao = conexaoCriador.getConexao();
     }
     
@@ -56,10 +56,9 @@ public class DaoUtils {
     
     
     public static void main(String[] args) throws SQLException {
-        DaoUtils du  = new DaoUtils();
+        Conexao conexao = new Conexao();
+        DaoUtils du  = new DaoUtils(conexao);
         du.limpaBanco();
-        //du.limpaBanco();
-        //du.limpaBanco();
         du.criaTabelas();
     }
     

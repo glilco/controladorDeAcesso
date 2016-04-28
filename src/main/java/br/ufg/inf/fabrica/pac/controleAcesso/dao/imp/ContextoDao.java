@@ -24,8 +24,8 @@ public class ContextoDao implements IContextoDao{
     private static final String SQL_SELECT_CONTEXTO = "SELECT c.nome, c.descricao FROM contexto AS c WHERE c.nome = ?";
     private static final String SQL_EXCLUI_CONTEXTO = "DELETE FROM contexto AS c WHERE c.nome = ?";
 
-    public ContextoDao() throws SQLException {
-        Conexao conexaoGerador = new Conexao();
+    public ContextoDao(Conexao conexaoGerador) throws SQLException {
+        //Conexao conexaoGerador = new Conexao();
         conexao = conexaoGerador.getConexao();
     }
 
@@ -39,6 +39,8 @@ public class ContextoDao implements IContextoDao{
         } catch (DerbySQLIntegrityConstraintViolationException ex) {
             System.err.println("Contexto já existe no banco: " + objeto.getNome());
             return false;
+        } finally {
+            p.close();
         }
         
         return true;
@@ -56,7 +58,8 @@ public class ContextoDao implements IContextoDao{
             contexto = new Contexto(r.getString(1), r.getString(2));
             
         }
-        
+        r.close();
+        p.close();
         return contexto;
         
     }
@@ -65,32 +68,13 @@ public class ContextoDao implements IContextoDao{
     public Contexto excluir(Contexto objeto) throws SQLException {
         PreparedStatement p = conexao.prepareStatement(SQL_EXCLUI_CONTEXTO);
         p.setString(1, objeto.getNome());
-        p.executeUpdate();
+        int r = p.executeUpdate();        
+        p.close();
+        if(r > 0) {
+            return objeto;
+        }
         
-        return objeto;
-    }
-    
-    public static void main(String args[]) throws SQLException {
-        ContextoDao cd = new ContextoDao();
-        
-        Contexto c1 = new Contexto("contexto 1", "Descricao do contexto 1");
-        Contexto c2 = new Contexto("contexto 2", "Descricao do contexto 2");
-        Contexto c3 = new Contexto("contexto 3", "Descricao do contexto 3");
-        
-        cd.salvar(c1);
-        cd.salvar(c2);
-        cd.salvar(c3);
-        
-        System.out.println(cd.obter("contexto 1").getNome() + " descricao: " + cd.obter("contexto 1").getDescricao());
-        System.out.println(cd.obter("contexto 2").getNome() + " descricao: " + cd.obter("contexto 2").getDescricao());
-        System.out.println(cd.obter("contexto 3").getNome() + " descricao: " + cd.obter("contexto 3").getDescricao());
-        
-        cd.salvar(c1);
-        
-        cd.excluir(c1);
-        cd.excluir(c2);
-        cd.excluir(c3);
-
+        return null;
     }
     
 }

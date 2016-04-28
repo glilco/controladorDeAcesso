@@ -1,3 +1,5 @@
 /controleAcessoData/
 /target/
 *~
+/nbproject/
+/controleAcessoTeste/

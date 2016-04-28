@@ -6,7 +6,11 @@
 package br.ufg.inf.fabrica.pac.controleAcesso.imp;
 
 import br.ufg.inf.fabrica.pac.controleAcesso.IRegistroPermissao;
+import br.ufg.inf.fabrica.pac.controleAcesso.dao.IContextoDao;
+import br.ufg.inf.fabrica.pac.controleAcesso.dao.IPapelDao;
 import br.ufg.inf.fabrica.pac.controleAcesso.dao.IPermissaoDao;
+import br.ufg.inf.fabrica.pac.controleAcesso.dao.IRecursoDao;
+import br.ufg.inf.fabrica.pac.controleAcesso.dao.imp.Conexao;
 import br.ufg.inf.fabrica.pac.controleAcesso.dao.imp.PermissaoDao;
 import br.ufg.inf.fabrica.pac.controleAcesso.modelo.Contexto;
 import br.ufg.inf.fabrica.pac.controleAcesso.modelo.Papel;
@@ -21,10 +25,13 @@ import java.util.Set;
  */
 public class RegistroPermissao implements IRegistroPermissao {
     private IPermissaoDao permissaoDao;
+    private IContextoDao contextoDao;
+    private IPapelDao papelDao;
+    private IRecursoDao recursoDao;
     
     public RegistroPermissao() {
         try {
-            permissaoDao = new PermissaoDao();
+            permissaoDao = new PermissaoDao(new Conexao());
         } catch(SQLException ex) {
             throw new RuntimeException("Não foi possível criar Permissao Dao", ex);
         }
@@ -69,5 +76,50 @@ public class RegistroPermissao implements IRegistroPermissao {
         } catch(SQLException e) {
             return null;
         }
+    }
+
+    @Override
+    public boolean registraPapel(Papel papel) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean removePapel(Papel papel) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean registraRecurso(Recurso recurso) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean removeRecurso(Recurso recurso) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean registraContexto(Contexto contexto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean removeContexto(Contexto contexto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Set<Papel> getPapeis() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Set<Recurso> getRecursos() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Set<Contexto> getContextos() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

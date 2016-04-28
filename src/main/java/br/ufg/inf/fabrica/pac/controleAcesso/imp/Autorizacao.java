@@ -7,6 +7,7 @@ package br.ufg.inf.fabrica.pac.controleAcesso.imp;
 
 import br.ufg.inf.fabrica.pac.controleAcesso.IAutorizacao;
 import br.ufg.inf.fabrica.pac.controleAcesso.dao.IPermissaoDao;
+import br.ufg.inf.fabrica.pac.controleAcesso.dao.imp.Conexao;
 import br.ufg.inf.fabrica.pac.controleAcesso.dao.imp.PermissaoDao;
 import br.ufg.inf.fabrica.pac.controleAcesso.modelo.Contexto;
 import br.ufg.inf.fabrica.pac.controleAcesso.modelo.Papel;
@@ -23,7 +24,7 @@ public class Autorizacao implements IAutorizacao {
 
     public Autorizacao() {
         try {
-        permissaoDao = new PermissaoDao();
+        permissaoDao = new PermissaoDao(new Conexao());
         } catch(SQLException ex) {
             throw  new RuntimeException("Não foi possível criar Permissao Dao ", ex);
         }

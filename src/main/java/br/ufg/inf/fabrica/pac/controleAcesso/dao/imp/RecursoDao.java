@@ -24,8 +24,7 @@ public class RecursoDao implements IRecursoDao {
     private static final String SQL_SELECT_RECURSO = "SELECT r.nome, r.descricao FROM recurso AS r WHERE r.nome = ?";
     private static final String SQL_EXCLUI_RECURSO = "DELETE FROM recurso AS r WHERE r.nome = ?";
 
-    public RecursoDao() throws SQLException {
-        Conexao conexaoGerador = new Conexao();
+    public RecursoDao(Conexao conexaoGerador) throws SQLException {
         conexao = conexaoGerador.getConexao();
     }
 
@@ -40,6 +39,8 @@ public class RecursoDao implements IRecursoDao {
         } catch (DerbySQLIntegrityConstraintViolationException ex) {
             System.err.println("Recurso já existe no banco: " + objeto.getNome());
             return false;
+        } finally {
+            p.close();
         }
         
         return true;
@@ -58,6 +59,9 @@ public class RecursoDao implements IRecursoDao {
             
         }
         
+        r.close();
+        p.close();
+        
         return recurso;
     }
 
@@ -65,8 +69,13 @@ public class RecursoDao implements IRecursoDao {
     public Recurso excluir(Recurso objeto) throws SQLException {
         PreparedStatement p = conexao.prepareStatement(SQL_EXCLUI_RECURSO);
         p.setString(1, objeto.getNome());
-        p.executeUpdate();
+        int i = p.executeUpdate();
         
-        return objeto;
+        p.close();
+        if(i > 0) {
+            return objeto;
+        }
+        
+        return null;
     }
 }

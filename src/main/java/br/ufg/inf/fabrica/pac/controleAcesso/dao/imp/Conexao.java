@@ -21,34 +21,36 @@ public class Conexao {
     private String senha;
     private String banco;
     
-    private int totalConexoes = 3;
-    private static Queue<Connection> conexoes;
+    //private int totalConexoes = 3;
+    //private static Queue<Connection> conexoes;
 
-    public Conexao(String usuario, String senha, String banco, int totalConexoes) {
+    public Conexao(String usuario, String senha, String banco) {
+        /*if(totalConexoes <=0) {
+            throw new RuntimeException("Total de conexões deve ser maior do que zero");
+        }*/
+        
         this.usuario = usuario;
         this.senha = senha;
         this.banco = banco;
-        this.totalConexoes = totalConexoes;
+        //this.totalConexoes = totalConexoes;
         
-        if(conexoes == null) {
+        /*if(conexoes == null) {
             conexoes = new LinkedList<>();
-        }
+        }*/
     }
 
     public Conexao() {
         this.usuario = "pac";
         this.senha = "pac";
         this.banco = "controleAcessoData";
-        if(conexoes == null) {
+        /*if(conexoes == null) {
             conexoes = new LinkedList<>();
-        }
+        }*/
     }
-    
-    
     
     public Connection getConexao() throws SQLException {
         Connection conexao = null;
-        if( conexoes.size() < totalConexoes) {
+        //if( conexoes.size() < totalConexoes) {
             
             Properties connectionProps = new Properties();
             connectionProps.put("user", usuario);
@@ -60,17 +62,14 @@ public class Conexao {
 
                 conexao = DriverManager.getConnection(connString,
                            connectionProps);
-                conexoes.add(conexao);
+                //conexoes.add(conexao);
 
-            System.out.println("Connected to database: " + conexoes.size());
-        } else {
+            //System.out.println("Connected to database: " + conexoes.size());
+        /*} else {
             conexao = conexoes.poll();
             conexoes.add(conexao);
         
-        }
+        }*/
         return conexao;
     }
-    
-    
-    
 }

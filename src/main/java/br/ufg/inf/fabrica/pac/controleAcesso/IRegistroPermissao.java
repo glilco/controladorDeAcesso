@@ -22,4 +22,17 @@ public interface IRegistroPermissao {
     public Set<Permissao> getPermissoes(Papel papel, Recurso recurso);
     public Permissao getPermissao(Papel papel, Recurso recurso, Contexto contexto);
     
+    public boolean registraPapel(Papel papel);
+    public boolean removePapel(Papel papel);
+    
+    public boolean registraRecurso(Recurso recurso);
+    public boolean removeRecurso(Recurso recurso);
+    
+    public boolean registraContexto(Contexto contexto);
+    public boolean removeContexto(Contexto contexto);
+    
+    public Set<Papel> getPapeis();
+    public Set<Recurso> getRecursos();
+    public Set<Contexto> getContextos();
+    
 }
