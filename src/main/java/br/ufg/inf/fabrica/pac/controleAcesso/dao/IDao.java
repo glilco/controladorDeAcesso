@@ -13,6 +13,6 @@ import java.sql.SQLException;
  */
 public interface IDao<T> {
     public Boolean salvar(T objeto) throws SQLException;
-    public T obter(String nome) throws SQLException;
+    public T obter(int id) throws SQLException;
     public T excluir(T objeto) throws SQLException;
 }

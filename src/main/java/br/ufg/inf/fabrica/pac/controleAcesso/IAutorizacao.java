@@ -5,9 +5,6 @@
  */
 package br.ufg.inf.fabrica.pac.controleAcesso;
 
-import br.ufg.inf.fabrica.pac.controleAcesso.modelo.Contexto;
-import br.ufg.inf.fabrica.pac.controleAcesso.modelo.Papel;
-import br.ufg.inf.fabrica.pac.controleAcesso.modelo.Recurso;
 import java.util.Set;
 
 /**
@@ -15,6 +12,6 @@ import java.util.Set;
  * @author murilo
  */
 public interface IAutorizacao {
-    public boolean verificaAutorizacao(Set<Papel> papeis, Recurso recurso);
-    public boolean verificaAutorizacao(Set<Papel> papeis, Recurso recurso, Contexto contexto);
+    public boolean verificaAutorizacao(Set<String> papeis, String recurso);
+    public boolean verificaAutorizacao(Set<String> papeis, String recurso, String contexto);
 }

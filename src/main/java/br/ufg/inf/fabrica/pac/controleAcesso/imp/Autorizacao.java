@@ -9,9 +9,6 @@ import br.ufg.inf.fabrica.pac.controleAcesso.IAutorizacao;
 import br.ufg.inf.fabrica.pac.controleAcesso.dao.IPermissaoDao;
 import br.ufg.inf.fabrica.pac.controleAcesso.dao.imp.Conexao;
 import br.ufg.inf.fabrica.pac.controleAcesso.dao.imp.PermissaoDao;
-import br.ufg.inf.fabrica.pac.controleAcesso.modelo.Contexto;
-import br.ufg.inf.fabrica.pac.controleAcesso.modelo.Papel;
-import br.ufg.inf.fabrica.pac.controleAcesso.modelo.Recurso;
 import java.sql.SQLException;
 import java.util.Set;
 
@@ -31,9 +28,9 @@ public class Autorizacao implements IAutorizacao {
     }
 
     @Override
-    public boolean verificaAutorizacao(Set<Papel> papeis, Recurso recurso) {
+    public boolean verificaAutorizacao(Set<String> papeis, String recurso) {
         try {
-            for(Papel papel: papeis) {
+            for(String papel: papeis) {
                 if(!permissaoDao.obter(recurso, papel).isEmpty()) {
                     return true;
                 }
@@ -45,9 +42,9 @@ public class Autorizacao implements IAutorizacao {
     }
 
     @Override
-    public boolean verificaAutorizacao(Set<Papel> papeis, Recurso recurso, Contexto contexto) {
+    public boolean verificaAutorizacao(Set<String> papeis, String recurso, String contexto) {
         try {
-            for(Papel papel: papeis) {
+            for(String papel: papeis) {
                 if(permissaoDao.obter(contexto, recurso, papel) != null) {
                     return true;
                 }
